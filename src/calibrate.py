@@ -4,8 +4,12 @@ from datetime import timedelta
 
 from HX711 import *
 
-if len(sys.argv) != 3:
-    print("Usage: calibrate.py [data pin] [clock pin]", file=sys.stderr)
+if len(sys.argv) != 4:
+    print("Usage: calibrate.py [data pin] [clock pin] [axis]", file=sys.stderr)
+    sys.exit(os.EX_USAGE)
+
+if (sys.argv[3] != 'y' and sys.argv[3] != 'z'):
+    print('Invalid axis input')
     sys.exit(os.EX_USAGE)
 
 try:
@@ -68,5 +72,11 @@ print(
     "hx.setReferenceUnit(" + str(round(refUnit)) + ") and " +
     "hx.setOffset(" + str(round(zeroValue)) + ")\n"
 )
+
+axis = sys.argv[3]
+f = open(axis + '_calibration.txt', 'w')
+f.write(str(round(refUnit)) + '\n')
+f.write(str(round(zeroValue)))
+f.close()
 
 sys.exit(os.EX_OK)

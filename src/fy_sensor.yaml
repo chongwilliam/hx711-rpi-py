@@ -1,0 +1,4 @@
+pin_a: 26
+pin_b: 19
+key: y_force_sensor
+cal_file: y_calibration.txt
